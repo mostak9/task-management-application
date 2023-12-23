@@ -1,13 +1,61 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
 import registerAnimation from "../../assets/login.json";
 import Lottie from "lottie-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "../../Components/Shared/SocialLogin/SocialLogin";
+import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import axios from "axios";
+import { useForm } from "react-hook-form"
+import toast from "react-hot-toast";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Registration = () => {
   const [showPass, setShowPass] = useState(false);
+  const {createUser, updateUser} = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
+  const { register, handleSubmit } = useForm()
+  const [progress, setProgress] = useState(false);
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    setProgress(true);
+    console.log(data);
+    const imageFile = { image: data.photo[0] };
+    const imgRes = await axios.post(image_hosting_api, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    console.log(imgRes)
+    if(imgRes.data.success) {
+      createUser(data.email, data.password)
+      .then(res => {
+        if(res.user) {
+          updateUser(data.name, imgRes.data.data.display_url)
+          .then(() => {
+            toast.success('Successfully Registered!')
+            setProgress(false);
+            navigate('/');
+          })
+          .catch(() => {
+            toast.error('Something went wrong!')
+            setProgress(false);
+          })
+        }
+      })
+      .catch(() => {
+        toast.error('Something went wrong!')
+        setProgress(false);
+      })
+    }
+  }
+
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className=" max-w-7xl h-2/3 m-auto shadow-2xl p-6 rounded-xl flex flex-col md:flex-row-reverse items-center gap-5">
@@ -28,13 +76,13 @@ const Registration = () => {
         </div>
         {/* registration form */}
         <div className="flex items-center justify-center flex-1 flex-col gap-2">
-          <form action="" className="w-full space-y-5">
-          <Input label="Full Name" type="text" />
-          <Input label="Profile Picture" type="file"/>
-            <Input label="Email" type="email" />
+          <form onSubmit={handleSubmit(onSubmit)} action="" className="w-full space-y-5">
+          <Input required {...register('name', {required: true})} label="Full Name" type="text" />
+          <Input required {...register('photo', {required: true})} label="Profile Picture" type="file"/>
+            <Input required {...register('email', {required: true})} name="email" label="Email" type="email" />
             
             <div className="relative">
-              <Input label="Password" type={showPass ? "text" : "password"} />
+              <Input required {...register('password', {required: true})} name="password" label="Password" type={showPass ? "text" : "password"} />
               <div
                 className="absolute right-1 top-1/3"
                 onClick={() => setShowPass(!showPass)}
@@ -42,7 +90,7 @@ const Registration = () => {
                 {showPass ? <FaRegEyeSlash /> : <FaRegEye />}
               </div>
             </div>
-            <Button className="w-full">Register</Button>
+            <Button loading={progress} disabled={progress} type="submit" className="w-full">Register</Button>
           </form>
           <p>
             Already have an account?
