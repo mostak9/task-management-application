@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   Navbar,
@@ -11,9 +11,13 @@ import { HiOutlineHome } from "react-icons/hi2";
 import { CgGoogleTasks } from "react-icons/cg";
 import { FaProjectDiagram } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
+import ProfileMenu from "./ProfileMenu";
 
 const Navigation = () => {
   const [openNav, setOpenNav] = useState(false);
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   useEffect(() => {
     window.addEventListener(
@@ -84,25 +88,30 @@ const Navigation = () => {
             </Typography>
             <div className="flex items-center gap-4">
               <div className="mr-4 hidden lg:block">{navList}</div>
-              <div className="flex items-center gap-x-1">
-                <Link to={"/login"}>
-                  <Button
-                    variant="text"
-                    size="sm"
-                    className="hidden lg:inline-block"
-                  >
-                    <span>Log In</span>
-                  </Button>
-                </Link>
-               <Link to={'/registration'}>
-               <Button
-                  variant="gradient"
-                  size="sm"
-                  className="hidden lg:inline-block"
-                >
-                  <span>Register</span>
-                </Button></Link>
-              </div>
+              {user ? (
+                <ProfileMenu />
+              ) : (
+                <div className="flex items-center gap-x-1">
+                  <Link to={"/login"}>
+                    <Button
+                      variant="text"
+                      size="sm"
+                      className="hidden lg:inline-block"
+                    >
+                      <span>Log In</span>
+                    </Button>
+                  </Link>
+                  <Link to={"/registration"}>
+                    <Button
+                      variant="gradient"
+                      size="sm"
+                      className="hidden lg:inline-block"
+                    >
+                      <span>Register</span>
+                    </Button>
+                  </Link>
+                </div>
+              )}
               <IconButton
                 variant="text"
                 className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
@@ -144,14 +153,22 @@ const Navigation = () => {
           </div>
           <Collapse open={openNav}>
             {navList}
-            <div className="flex items-center gap-x-1">
-              <Button fullWidth variant="text" size="sm" className="">
-                <span>Log In</span>
-              </Button>
-              <Button fullWidth variant="gradient" size="sm" className="">
-                <span>Sign in</span>
-              </Button>
-            </div>
+            {user?.email ? (
+              <ProfileMenu />
+            ) : (
+              <div className="flex items-center gap-x-1">
+                <Link to="/login">
+                  <Button fullWidth variant="text" size="sm" className="">
+                    <span>Log In</span>
+                  </Button>
+                </Link>
+                <Link to="/registration">
+                  <Button fullWidth variant="gradient" size="sm" className="">
+                    <span>Sign in</span>
+                  </Button>
+                </Link>
+              </div>
+            )}
           </Collapse>
         </div>
       </Navbar>

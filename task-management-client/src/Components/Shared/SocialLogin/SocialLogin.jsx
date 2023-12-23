@@ -1,11 +1,26 @@
 import { Button } from "@material-tailwind/react";
+import { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
+import {useNavigate} from 'react-router-dom';
 
 const SocialLogin = () => {
+  const {googleLogin} = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const handleLogin = () => {
+    googleLogin()
+    .then(res => {
+      console.log(res.user);
+      navigate('/');
+    })
+    .catch(err => console.log(err));
+  }
   return (
     <div className="w-full">
       <Button
         variant="outlined"
+        onClick={handleLogin}
         size="sm"
         className="w-full flex items-center gap-1 justify-center"
       >
