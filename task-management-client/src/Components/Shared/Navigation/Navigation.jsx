@@ -94,13 +94,14 @@ const Navigation = () => {
                     <span>Log In</span>
                   </Button>
                 </Link>
-                <Button
+               <Link to={'/registration'}>
+               <Button
                   variant="gradient"
                   size="sm"
                   className="hidden lg:inline-block"
                 >
-                  <span>Sign in</span>
-                </Button>
+                  <span>Register</span>
+                </Button></Link>
               </div>
               <IconButton
                 variant="text"
