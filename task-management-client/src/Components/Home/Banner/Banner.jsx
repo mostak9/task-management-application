@@ -1,6 +1,7 @@
 import { Button } from "@material-tailwind/react";
 import bg from "../../../assets/banner_bg.jpg";
 import { TypeAnimation } from "react-type-animation";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   return (
@@ -29,12 +30,12 @@ const Banner = () => {
             }}
             repeat={Infinity}
           />
-          <p className="max-w-2xl text-gray-700 mx-auto text-xl">
+          <p className="max-w-2xl text-gray-700 mx-auto text-xl ">
             Stay on top of tasks, prioritize work, and enhance team
             productivity. Customize workflows, set reminders, and never miss a
             deadline again
           </p>
-          <Button size="lg" variant="filled">Let's Explore</Button>
+          <Link className="" to={'/dashboard'}><Button className="mt-5" size="lg" variant="filled">Let's Explore</Button></Link>
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ import { HiOutlineHome } from "react-icons/hi2";
 import { CgGoogleTasks } from "react-icons/cg";
 import { FaProjectDiagram } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { MdDashboard } from "react-icons/md";
 import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
 import ProfileMenu from "./ProfileMenu";
 
@@ -60,6 +61,18 @@ const Navigation = () => {
           Projects
         </Typography>
       </NavLink>
+      {
+        user && <NavLink to={'/dashboard'}>
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="flex items-center gap-x-2 p-1 font-medium"
+        >
+          <MdDashboard  /> Dashboard
+        </Typography>
+      </NavLink>
+      }
       <NavLink>
         <Typography
           as="li"
@@ -70,6 +83,7 @@ const Navigation = () => {
           <IoIosNotificationsOutline className="text-3xl" />
         </Typography>
       </NavLink>
+     
     </ul>
   );
   return (
