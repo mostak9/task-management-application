@@ -1,9 +1,10 @@
+import SidePanel from "../../Components/Dashboard/SiderPanel/SidePanel";
 
 
 const Dashboard = () => {
     return (
         <div>
-            This is Dashboard Layout
+            <SidePanel/>
         </div>
     );
 };
