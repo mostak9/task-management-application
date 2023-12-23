@@ -4,6 +4,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { FaPowerOff   } from "react-icons/fa"; 
 
 import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
+import toast from "react-hot-toast";
 
 
 
@@ -15,7 +16,9 @@ const ProfileMenu = () => {
 
   const handleLogOut = () => {
     logOut()
-    .then(() => alert('user Logged out.'))
+    .then(() => {
+      toast.success('Logged out successfully!')
+    })
   }
     return (
         <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">

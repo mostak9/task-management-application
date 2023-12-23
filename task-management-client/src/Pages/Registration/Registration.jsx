@@ -24,14 +24,12 @@ const Registration = () => {
 
   const onSubmit = async (data) => {
     setProgress(true);
-    console.log(data);
     const imageFile = { image: data.photo[0] };
     const imgRes = await axios.post(image_hosting_api, imageFile, {
       headers: {
         "content-type": "multipart/form-data",
       },
     });
-    console.log(imgRes)
     if(imgRes.data.success) {
       createUser(data.email, data.password)
       .then(res => {
