@@ -1,8 +1,7 @@
 import {
   Button,
   Input,
-  Option,
-  Select,
+  
   Textarea,
   Typography,
 } from "@material-tailwind/react";
@@ -20,9 +19,7 @@ const CreateTask = () => {
   const { user } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
-    console.log(data);
     const taskDoc = { ...data, status: "todo", email: user.email };
-    console.log(taskDoc);
     const res = await axiosPublic.post("/allTasks", taskDoc);
     if (res.data.insertedId) {
       toast.success("Task added successfully!");
