@@ -17,6 +17,15 @@ import { RiCalendarTodoFill } from "react-icons/ri";
 import { GrInProgress } from "react-icons/gr";
 import { NavLink } from "react-router-dom";
 
+const navStyle = ({ isActive, isTransitioning }) => {
+  return {
+    fontWeight: isActive ? "bold" : "",
+    color: isActive ? "white" : "black",
+    backgroundColor: isActive ? 'black': '',
+    viewTransitionName: isTransitioning ? "slide" : "",
+  };
+}
+
 const SidePanel = () => {
   const [open, setOpen] = useState(false);
   return (
@@ -37,14 +46,20 @@ const SidePanel = () => {
         >
           <IoMdClose className="text-xl font-bold" />
         </IconButton>
-        <div className="mb-2 p-4 relative flex-1">
-          <Typography variant="h5" color="blue-gray">
-            Sidebar
-          </Typography>
+        <div className="mb-2 p-4  flex items-center">
+        <Typography
+              variant="h5"
+              className="mr-4 cursor-pointer py-1.5 flex items-center font-bold"
+            >
+              Task
+              <Typography className="text-white bg-black rounded-sm font-bold italic px-2 ">
+                Forge
+              </Typography>
+            </Typography>
         </div>
-        <List className="flex-1">
+        <List className="">
           {/* manage tasks */}
-          <NavLink to={"/dashboard/manageTasks"}>
+          <NavLink style={navStyle} to={"/dashboard/manageTasks"}>
             <ListItem>
               <ListItemPrefix>
                 <BsListTask />
@@ -53,7 +68,7 @@ const SidePanel = () => {
             </ListItem>
           </NavLink>
           {/* create tasks */}
-          <NavLink to={"/dashboard/createTask"}>
+          <NavLink  style={navStyle} to={"/dashboard/createTask"}>
             <ListItem>
               <ListItemPrefix>
                 <TfiWrite />
@@ -62,7 +77,7 @@ const SidePanel = () => {
             </ListItem>
           </NavLink>
           {/* todo list */}
-          <NavLink to={"/dashboard/todoTasks"}>
+          <NavLink style={navStyle} to={"/dashboard/todoTasks"}>
             <ListItem>
               <ListItemPrefix>
                 <RiCalendarTodoFill />
@@ -71,7 +86,7 @@ const SidePanel = () => {
             </ListItem>
           </NavLink>
           {/* ongoing task */}
-          <NavLink to={"/dashboard/ongoingTasks"}>
+          <NavLink style={navStyle} to={"/dashboard/ongoingTasks"}>
             <ListItem>
               <ListItemPrefix>
                 <GrInProgress />
@@ -80,7 +95,7 @@ const SidePanel = () => {
             </ListItem>
           </NavLink>
           {/* completed task */}
-          <NavLink to={"/dashboard/completedTasks"}>
+          <NavLink style={navStyle} to={"/dashboard/completedTasks"}>
             <ListItem>
               <ListItemPrefix>
                 <CiCircleCheck />
