@@ -9,9 +9,9 @@ const Dashboard = () => {
     <div className="relative">
       
       <div className="absolute top-1/2 left-0"></div>
-      <div className={`md:grid md:grid-cols-4`}>
+      <div className={` lg:grid lg:grid-cols-4`}>
         <SidePanel />
-        <div className="md:col-span-3">
+        <div className="lg:col-span-3">
           <Outlet/>
         </div>
       </div>

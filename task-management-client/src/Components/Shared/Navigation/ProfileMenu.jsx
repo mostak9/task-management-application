@@ -33,7 +33,7 @@ const ProfileMenu = () => {
             size="sm"
             alt="tania andrew"
             className="border border-gray-900 p-0.5"
-            src={user.photoURL}
+            src={user?.photoURL}
           />
           <IoMdArrowDropdown
             strokeWidth={2.5}
