@@ -20,13 +20,31 @@ const client = new MongoClient(uri, {
   },
 });
 
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+    const tasksCollections = client.db('taskDB').collection('taskCollections');
+
+    // api to add tasks
+    app.post('/allTasks', async(req, res) => {
+      const data = req.body;
+      const result = await tasksCollections.insertOne(data);
+      res.send(result);
+    })
+
+    // api to get tasks
+    app.get('/getTasks', async(req, res) => {
+      const email = req.query.email;
+      const status = req.query.status;
+      const filter = {email: email, status: status};
+      const result = await tasksCollections.find(filter).toArray();
+      res.send(result);
+    })
+
     // Send a ping to confirm a successful connection
 
-    
     await client.db("admin").command({ ping: 1 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
