@@ -10,6 +10,11 @@ import {
 } from "@material-tailwind/react";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import { CiCircleCheck  } from "react-icons/ci";
+import { BsListTask } from "react-icons/bs";
+import { TfiWrite } from "react-icons/tfi";
+import { RiCalendarTodoFill } from "react-icons/ri";
+import { GrInProgress } from "react-icons/gr";
 
 const SidePanel = () => {
   const [open, setOpen] = useState(false);
@@ -32,29 +37,24 @@ const SidePanel = () => {
         </div>
         <List className="flex-1">
           <ListItem>
-            <ListItemPrefix></ListItemPrefix>
-            Dashboard
+            <ListItemPrefix><BsListTask/></ListItemPrefix>
+            Manage Tasks
           </ListItem>
           <ListItem>
-            <ListItemPrefix></ListItemPrefix>
-            E-Commerce
+            <ListItemPrefix><TfiWrite/></ListItemPrefix>
+            Create Task
           </ListItem>
           <ListItem>
-            <ListItemPrefix></ListItemPrefix>
-            Inbox
-            <ListItemSuffix></ListItemSuffix>
+            <ListItemPrefix><RiCalendarTodoFill/></ListItemPrefix>
+            TO-DO List
           </ListItem>
           <ListItem>
-            <ListItemPrefix></ListItemPrefix>
-            Profile
+            <ListItemPrefix><GrInProgress/></ListItemPrefix>
+            Ongoing Tasks
           </ListItem>
           <ListItem>
-            <ListItemPrefix></ListItemPrefix>
-            Settings
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix></ListItemPrefix>
-            Log Out
+            <ListItemPrefix><CiCircleCheck/></ListItemPrefix>
+            Completed Tasks
           </ListItem>
         </List>
       </div>
