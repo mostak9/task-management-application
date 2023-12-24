@@ -7,12 +7,27 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useForm } from "react-hook-form";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
 
 const CreateTask = () => {
   const { register, handleSubmit } = useForm();
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    const taskDoc = { ...data, status: "todo", email: user.email };
+    console.log(taskDoc);
+    const res = await axiosPublic.post("/allTasks", taskDoc);
+    if (res.data.insertedId) {
+      toast.success("Task added successfully!");
+      navigate("/dashboard/todoTasks");
+    }
   };
 
   return (
@@ -34,7 +49,10 @@ const CreateTask = () => {
               <Option value="moderate">Moderate</Option>
               <Option value="low">Low</Option>
             </Select> */}
-            <select {...register("priority")} className="w-full border-2 border-black/30 h-10 rounded-lg px-3">
+            <select
+              {...register("priority")}
+              className="w-full border-2 border-black/30 h-10 rounded-lg px-3"
+            >
               <option value="high">High</option>
               <option value="moderate">Moderate</option>
               <option value="low">Low</option>
