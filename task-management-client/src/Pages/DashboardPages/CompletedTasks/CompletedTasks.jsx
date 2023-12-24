@@ -3,7 +3,7 @@
 const CompletedTasks = () => {
     return (
         <div>
-            This is ongoing tasks page.
+            This is Completed tasks page.
         </div>
     );
 };
