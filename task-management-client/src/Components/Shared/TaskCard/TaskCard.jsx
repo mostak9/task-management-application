@@ -27,20 +27,31 @@ const TaskCard = ({ data }) => {
         </p>
       </CardHeader>
 
-      <CardBody className="relative">
-        <div className="mb-6">
+      <CardBody className="relative flex-grow flex flex-col gap-3">
+        <div className="flex-grow">
           <Typography variant="h5" color="blue-gray" className="mb-2">
             {data.title}
           </Typography>
+          <div className="flex items-center gap-3">
           {data.status === "todo" && (
-            <Chip className="w-fit" size="sm" color="red" value="To-Do" />
+            <Chip variant="ghost" className="w-fit" size="sm" color="red" value="To-Do" />
           )}
           {data.status === "ongoing" && (
-            <Chip className="w-fit" size="sm" color="amber" value="To-Do" />
+            <Chip variant="ghost" className="w-fit" size="sm" color="amber" value="To-Do" />
           )}
           {data.status === "ongoing" && (
-            <Chip className="w-fit" size="sm" color="green" value="To-Do" />
+            <Chip variant="ghost" className="w-fit" size="sm" color="green" value="To-Do" />
           )}
+          {data.priority === "high" && (
+            <Chip variant="ghost" className="w-fit" size="sm" color="pink" value="High" />
+          )}
+          {data.priority === "moderate" && (
+            <Chip variant="ghost" className="w-fit" size="sm" color="blue" value="Moderate" />
+          )}
+          {data.priority === "low" && (
+            <Chip variant="ghost" className="w-fit" size="sm" color="green" value="Low" />
+          )}
+          </div>
         </div>
         <Typography>{data.description}</Typography>
       </CardBody>
