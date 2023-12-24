@@ -35,7 +35,7 @@ const Banner = () => {
             productivity. Customize workflows, set reminders, and never miss a
             deadline again
           </p>
-          <Link className="" to={'/dashboard'}><Button className="mt-5" size="lg" variant="filled">Let's Explore</Button></Link>
+          <Link className="" to={'/dashboard/manageTasks'}><Button className="mt-5" size="lg" variant="filled">Let's Explore</Button></Link>
         </div>
       </div>
     </div>

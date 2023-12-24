@@ -2,17 +2,19 @@ import { Button } from "@material-tailwind/react";
 import { useContext } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../../../Providers/AuthProvider/AuthProvider";
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 const SocialLogin = () => {
   const {googleLogin} = useContext(AuthContext);
 
   const navigate = useNavigate();
+  const location = useLocation();
+
   const handleLogin = () => {
     googleLogin()
     .then(res => {
       console.log(res.user);
-      navigate('/');
+      navigate(location.state || '/');
     })
     .catch(err => console.log(err));
   }

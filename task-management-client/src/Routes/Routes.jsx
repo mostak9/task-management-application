@@ -9,6 +9,7 @@ import CreateTask from '../Pages/DashboardPages/CreateTask/CreateTask';
 import TodoList from '../Pages/DashboardPages/TodoList/TodoList';
 import OngoingTasks from '../Pages/DashboardPages/OngoingTasks/OngoingTasks';
 import CompletedTasks from '../Pages/DashboardPages/CompletedTasks/CompletedTasks';
+import PrivateRoute from '../Components/Shared/PrivateRoute/PrivateRoute';
 const router = createBrowserRouter([
     {
         path: '/',
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard/>,
+        element: <PrivateRoute><Dashboard/></PrivateRoute>,
         children: [
             {
                 path: '/dashboard/manageTasks',

@@ -3,7 +3,7 @@ import loginAnimation from "../../assets/login.json";
 import Lottie from "lottie-react";
 import { useContext, useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../../Components/Shared/SocialLogin/SocialLogin";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
@@ -14,13 +14,14 @@ const Login = () => {
   const { register, handleSubmit } = useForm();
   const {userLogin} = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
 const onSubmit = (data) => {
   console.log(data);
   userLogin(data.email, data.password)
   .then(() => {
     toast.success('Successfully logged in!')
-    navigate('/');
+    navigate(location.state || '/');
   })
   .catch(() => {toast.error('Something went wrong!')})
 }

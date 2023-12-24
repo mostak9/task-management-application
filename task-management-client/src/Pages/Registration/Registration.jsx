@@ -3,7 +3,7 @@ import registerAnimation from "../../assets/login.json";
 import Lottie from "lottie-react";
 import { useContext, useState } from "react";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../../Components/Shared/SocialLogin/SocialLogin";
 import { AuthContext } from "../../Providers/AuthProvider/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
@@ -21,6 +21,7 @@ const Registration = () => {
   const { register, handleSubmit } = useForm()
   const [progress, setProgress] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onSubmit = async (data) => {
     setProgress(true);
@@ -38,7 +39,7 @@ const Registration = () => {
           .then(() => {
             toast.success('Successfully Registered!')
             setProgress(false);
-            navigate('/');
+            navigate(location.state || '/');
           })
           .catch(() => {
             toast.error('Something went wrong!')

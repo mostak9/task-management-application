@@ -1,10 +1,8 @@
 import {
-  Card,
   Typography,
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
   Button,
   IconButton,
   Navbar,
@@ -67,6 +65,7 @@ const SidePanel = () => {
           <IoMdClose className="text-xl font-bold" />
         </IconButton>
         <div className="mb-2 p-4  flex items-center">
+          <Link to={'/'}>
           <Typography
             variant="h5"
             className="mr-4 cursor-pointer py-1.5 flex items-center font-bold"
@@ -76,6 +75,7 @@ const SidePanel = () => {
               Forge
             </Typography>
           </Typography>
+          </Link>
         </div>
         <List className="">
           {/* manage tasks */}

@@ -62,7 +62,7 @@ const Navigation = () => {
         </Typography>
       </NavLink>
       {
-        user && <NavLink to={'/dashboard'}>
+        user && <NavLink to={'/dashboard/manageTasks'}>
         <Typography
           as="li"
           variant="small"
