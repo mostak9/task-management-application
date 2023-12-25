@@ -1,32 +1,53 @@
 import {
+  Button,
   Card,
   CardBody,
+  CardFooter,
   Chip,
+  Dialog,
+  DialogFooter,
+  DialogHeader,
+  IconButton,
   Spinner,
   Typography,
 } from "@material-tailwind/react";
 import useGetTasks from "../../../hooks/useGetTasks";
 
-import ShortCard from "../../../Components/Shared/ShortCard/ShortCard";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { CiClock2 } from "react-icons/ci";
+import { CiClock2, CiEdit } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import { useState } from "react";
 
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+import useTaskDelete from "../../../hooks/useTaskDelete";
 
 const ManageTasks = () => {
-    const axiosPublic = useAxiosPublic();
-  const [initialTodo, todoLoading, refetchTodo , successTodo] = useGetTasks("todo");
-  const [initialOngoing, ongoingLoading,refetchOngoing , successOngoing] = useGetTasks("ongoing");
-  const [initialCompleted, completedLoading, refetchCompleted , successCompleted] = useGetTasks("completed");
-  
+  const axiosPublic = useAxiosPublic();
+  const [initialTodo, todoLoading, refetchTodo, successTodo] =
+    useGetTasks("todo");
+  const [initialOngoing, ongoingLoading, refetchOngoing, successOngoing] =
+    useGetTasks("ongoing");
+  const [
+    initialCompleted,
+    completedLoading,
+    refetchCompleted,
+    successCompleted,
+  ] = useGetTasks("completed");
+
   const [todoList, updateTodoList] = useState(initialTodo);
   const [ongoingList, updateOngoingList] = useState(initialOngoing);
   const [completedList, updateCompletedList] = useState(initialCompleted);
+  const [openTodo, setOpenTodo] = useState(false);
+  const [openOngoing, setOpenOngoing] = useState(false);
+  const [openCompleted, setOpenCompleted] = useState(false);
+  const handleDeleteTask = useTaskDelete();
 
-  
+  const handleOpenTodo = () => setOpenTodo(!openTodo);
+  const handleOpenOngoing = () => setOpenOngoing(!openOngoing);
+  const handleOpenCompleted = () => setOpenCompleted(!openCompleted);
+
   if (successTodo && !todoList) {
     updateTodoList(initialTodo);
   }
@@ -44,7 +65,6 @@ const ManageTasks = () => {
     );
 
   const handleOnDragEnd = async (result) => {
-   
     if (!result.destination) return;
     const items = Array.from(todoList);
     const [reOrderItem] = items.splice(result.source.index, 1);
@@ -52,19 +72,23 @@ const ManageTasks = () => {
     updateTodoList(items);
 
     const modifiedStatus = result.destination.droppableId;
-    if(!modifiedStatus || result.source.droppableId ===  result.destination.droppableId) return;
-    const res = await axiosPublic.patch(`/updateList/${result.draggableId}`, {status: modifiedStatus})
+    if (
+      !modifiedStatus ||
+      result.source.droppableId === result.destination.droppableId
+    )
+      return;
+    const res = await axiosPublic.patch(`/updateList/${result.draggableId}`, {
+      status: modifiedStatus,
+    });
 
-   
-    if(res.data.modifiedCount) {
-        toast.success('Task updated!')
-        refetchTodo();
-        refetchOngoing();
-        refetchCompleted();
-    }else {
-        toast.error("Something went wrong!")
+    if (res.data.modifiedCount) {
+      toast.success("Task updated!");
+      refetchTodo();
+      refetchOngoing();
+      refetchCompleted();
+    } else {
+      toast.error("Something went wrong!");
     }
-    
   };
 
   return (
@@ -172,6 +196,43 @@ const ManageTasks = () => {
                               )}
                             </div>
                           </CardBody>
+                          <CardFooter className="pt-0 flex items-center justify-center gap-4">
+                            <IconButton variant="text">
+                              <CiEdit className="text-xl" />
+                            </IconButton>
+                            <IconButton
+                              onClick={handleOpenTodo}
+                              variant="text"
+                              color="red"
+                            >
+                              <MdOutlineDeleteOutline className="text-xl" />
+                            </IconButton>
+                          </CardFooter>
+                          <Dialog open={openTodo} handler={handleOpenTodo}>
+                            <DialogHeader className="text-center mx-auto">
+                              Are you sure?
+                            </DialogHeader>
+                            <DialogFooter>
+                              <Button
+                                variant="text"
+                                color="red"
+                                onClick={handleOpenTodo}
+                                className="mr-1"
+                              >
+                                <span>Cancel</span>
+                              </Button>
+                              <Button
+                                variant="gradient"
+                                color="green"
+                                onClick={() => {
+                                  handleOpenTodo();
+                                  handleDeleteTask(data._id);
+                                }}
+                              >
+                                <span>Confirm</span>
+                              </Button>
+                            </DialogFooter>
+                          </Dialog>
                         </Card>
                       )}
                     </Draggable>
@@ -282,6 +343,43 @@ const ManageTasks = () => {
                               )}
                             </div>
                           </CardBody>
+                          <CardFooter className="pt-0 flex items-center justify-center gap-4">
+                            <IconButton variant="text">
+                              <CiEdit className="text-xl" />
+                            </IconButton>
+                            <IconButton
+                              onClick={handleOpenOngoing}
+                              variant="text"
+                              color="red"
+                            >
+                              <MdOutlineDeleteOutline className="text-xl" />
+                            </IconButton>
+                          </CardFooter>
+                          <Dialog open={openOngoing} handler={handleOpenOngoing}>
+                            <DialogHeader className="text-center mx-auto">
+                              Are you sure?
+                            </DialogHeader>
+                            <DialogFooter>
+                              <Button
+                                variant="text"
+                                color="red"
+                                onClick={handleOpenOngoing}
+                                className="mr-1"
+                              >
+                                <span>Cancel</span>
+                              </Button>
+                              <Button
+                                variant="gradient"
+                                color="green"
+                                onClick={() => {
+                                  handleOpenOngoing();
+                                  handleDeleteTask(data._id);
+                                }}
+                              >
+                                <span>Confirm</span>
+                              </Button>
+                            </DialogFooter>
+                          </Dialog>
                         </Card>
                       )}
                     </Draggable>
@@ -392,6 +490,43 @@ const ManageTasks = () => {
                               )}
                             </div>
                           </CardBody>
+                          <CardFooter className="pt-0 flex items-center justify-center gap-4">
+                            <IconButton variant="text">
+                              <CiEdit className="text-xl" />
+                            </IconButton>
+                            <IconButton
+                              onClick={handleOpenCompleted}
+                              variant="text"
+                              color="red"
+                            >
+                              <MdOutlineDeleteOutline className="text-xl" />
+                            </IconButton>
+                          </CardFooter>
+                          <Dialog open={openCompleted} handler={handleOpenCompleted}>
+                            <DialogHeader className="text-center mx-auto">
+                              Are you sure?
+                            </DialogHeader>
+                            <DialogFooter>
+                              <Button
+                                variant="text"
+                                color="red"
+                                onClick={handleOpenCompleted}
+                                className="mr-1"
+                              >
+                                <span>Cancel</span>
+                              </Button>
+                              <Button
+                                variant="gradient"
+                                color="green"
+                                onClick={() => {
+                                  handleOpenCompleted();
+                                  handleDeleteTask(data._id);
+                                }}
+                              >
+                                <span>Confirm</span>
+                              </Button>
+                            </DialogFooter>
+                          </Dialog>
                         </Card>
                       )}
                     </Draggable>
