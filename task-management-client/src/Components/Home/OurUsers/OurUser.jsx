@@ -1,7 +1,6 @@
-
 const OurUser = () => {
-    return (
-        <section className="py-12 bg-gray-100">
+  return (
+    <section className="py-12 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-6">Who Can Benefit</h2>
@@ -15,7 +14,9 @@ const OurUser = () => {
             </div>
 
             <div className="bg-white rounded-lg p-4 shadow-md ">
-              <h3 className="text-lg font-semibold mb-2">Corporate Professionals</h3>
+              <h3 className="text-lg font-semibold mb-2">
+                Corporate Professionals
+              </h3>
               <p className="text-gray-600">
                 Find solutions for business management and productivity.
               </p>
@@ -52,7 +53,7 @@ const OurUser = () => {
         </div>
       </div>
     </section>
-    );
+  );
 };
 
 export default OurUser;
