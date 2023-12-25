@@ -7,7 +7,7 @@ import useAxiosPublic from "./useAxiosPublic";
 const useGetTasks = (status) => {
     const {user} = useContext(AuthContext);
     const axiosPublic = useAxiosPublic();
-    const {data, isLoading, refetch} = useQuery({
+    const {data, isLoading, refetch, isSuccess} = useQuery({
         queryKey: ['all tasks', user, status],
         queryFn: async () => {
            if(user?.email){
@@ -17,7 +17,7 @@ const useGetTasks = (status) => {
         }
     })
 
-    return [data, isLoading, refetch];
+    return [data, isLoading, refetch, isSuccess];
 };
 
 export default useGetTasks;

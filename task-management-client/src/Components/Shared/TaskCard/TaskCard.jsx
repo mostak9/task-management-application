@@ -36,10 +36,10 @@ const TaskCard = ({ data }) => {
             <Chip variant="ghost" className="w-fit" size="sm" color="red" value="To-Do" />
           )}
           {data.status === "ongoing" && (
-            <Chip variant="ghost" className="w-fit" size="sm" color="amber" value="To-Do" />
+            <Chip variant="ghost" className="w-fit" size="sm" color="amber" value="Ongoing" />
           )}
-          {data.status === "ongoing" && (
-            <Chip variant="ghost" className="w-fit" size="sm" color="green" value="To-Do" />
+          {data.status === "completed" && (
+            <Chip variant="ghost" className="w-fit" size="sm" color="green" value="Completed" />
           )}
           {data.priority === "high" && (
             <Chip variant="ghost" className="w-fit" size="sm" color="pink" value="High" />

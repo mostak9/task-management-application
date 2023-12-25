@@ -22,24 +22,60 @@ const ShortCard = ({ data }) => {
         </Typography>
         <div className="flex items-center gap-3">
           {data.status === "todo" && (
-            <Chip variant="ghost" className="w-fit" size="sm" color="red" value="To-Do" />
+            <Chip
+              variant="ghost"
+              className="w-fit"
+              size="sm"
+              color="red"
+              value="To-Do"
+            />
           )}
           {data.status === "ongoing" && (
-            <Chip variant="ghost" className="w-fit" size="sm" color="amber" value="To-Do" />
+            <Chip
+              variant="ghost"
+              className="w-fit"
+              size="sm"
+              color="amber"
+              value="To-Do"
+            />
           )}
           {data.status === "ongoing" && (
-            <Chip variant="ghost" className="w-fit" size="sm" color="green" value="To-Do" />
+            <Chip
+              variant="ghost"
+              className="w-fit"
+              size="sm"
+              color="green"
+              value="To-Do"
+            />
           )}
           {data.priority === "high" && (
-            <Chip variant="ghost" className="w-fit" size="sm" color="pink" value="High" />
+            <Chip
+              variant="ghost"
+              className="w-fit"
+              size="sm"
+              color="pink"
+              value="High"
+            />
           )}
           {data.priority === "moderate" && (
-            <Chip variant="ghost" className="w-fit" size="sm" color="blue" value="Moderate" />
+            <Chip
+              variant="ghost"
+              className="w-fit"
+              size="sm"
+              color="blue"
+              value="Moderate"
+            />
           )}
           {data.priority === "low" && (
-            <Chip variant="ghost" className="w-fit" size="sm" color="green" value="Low" />
+            <Chip
+              variant="ghost"
+              className="w-fit"
+              size="sm"
+              color="green"
+              value="Low"
+            />
           )}
-          </div>
+        </div>
       </CardBody>
     </Card>
   );
