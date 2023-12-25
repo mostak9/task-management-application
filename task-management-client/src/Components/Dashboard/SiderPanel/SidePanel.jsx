@@ -55,7 +55,7 @@ const SidePanel = () => {
       <div
         className={`h-[calc(100vh)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5  transform ${
           open ? "translate-x-0" : "-translate-x-80 lg:translate-x-0"
-        } duration-1000 absolute top-0 lg:static z-10  rounded-none bg-white`}
+        } duration-1000 absolute top-0 lg:static z-10  rounded-none bg-white flex items-center flex-col gap-5`}
       >
         <IconButton
           variant="text"
@@ -77,6 +77,7 @@ const SidePanel = () => {
           </Typography>
           </Link>
         </div>
+        <ProfileMenu/>
         <List className="">
           {/* manage tasks */}
           <NavLink style={navStyle} to={"/dashboard/manageTasks"}>

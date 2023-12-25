@@ -26,7 +26,7 @@ const ManageTasks = () => {
   const [ongoingList, updateOngoingList] = useState(initialOngoing);
   const [completedList, updateCompletedList] = useState(initialCompleted);
 
-  console.log(successTodo);
+  
   if (successTodo && !todoList) {
     updateTodoList(initialTodo);
   }
@@ -43,9 +43,8 @@ const ManageTasks = () => {
       </div>
     );
 
-  console.log(todoList);
   const handleOnDragEnd = async (result) => {
-    console.log(result);
+   
     if (!result.destination) return;
     const items = Array.from(todoList);
     const [reOrderItem] = items.splice(result.source.index, 1);
@@ -56,7 +55,7 @@ const ManageTasks = () => {
     if(!modifiedStatus || result.source.droppableId ===  result.destination.droppableId) return;
     const res = await axiosPublic.patch(`/updateList/${result.draggableId}`, {status: modifiedStatus})
 
-    console.log(res.data);
+   
     if(res.data.modifiedCount) {
         toast.success('Task updated!')
         refetchTodo();
@@ -99,7 +98,7 @@ const ManageTasks = () => {
                           ref={provided.innerRef}
                         >
                           <CardBody>
-                            <div className="flex items-center justify-between p-1">
+                            <div className="flex flex-col lg:flex-row items-center justify-between p-1">
                               <p className="flex items-center gap-1 text-xs">
                                 <CiClock2 />
                                 {data.time}
@@ -116,7 +115,7 @@ const ManageTasks = () => {
                             >
                               {data.title}
                             </Typography>
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-col lg:flex-row items-center gap-3">
                               {data.status === "todo" && (
                                 <Chip
                                   variant="ghost"
@@ -209,7 +208,7 @@ const ManageTasks = () => {
                           ref={provided.innerRef}
                         >
                           <CardBody>
-                            <div className="flex items-center justify-between p-1">
+                            <div className="flex flex-col lg:flex-row items-center justify-between p-1">
                               <p className="flex items-center gap-1 text-xs">
                                 <CiClock2 />
                                 {data.time}
@@ -226,7 +225,7 @@ const ManageTasks = () => {
                             >
                               {data.title}
                             </Typography>
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-col lg:flex-row items-center gap-3">
                               {data.status === "todo" && (
                                 <Chip
                                   variant="ghost"
@@ -320,7 +319,7 @@ const ManageTasks = () => {
                         >
                           <CardBody>
                             <div className="flex items-center justify-between p-1">
-                              <p className="flex items-center gap-1 text-xs">
+                              <p className="flex flex-col lg:flex-row items-center gap-1 text-xs">
                                 <CiClock2 />
                                 {data.time}
                               </p>
@@ -336,7 +335,7 @@ const ManageTasks = () => {
                             >
                               {data.title}
                             </Typography>
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-col lg:flex-row items-center gap-3">
                               {data.status === "todo" && (
                                 <Chip
                                   variant="ghost"
