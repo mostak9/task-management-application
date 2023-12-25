@@ -13,8 +13,11 @@ import { CiClock2 } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
 import { useState } from "react";
 import TodoList from "../TodoList/TodoList";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import toast from 'react-hot-toast';
 
 const ManageTasks = () => {
+    const axiosPublic = useAxiosPublic();
   const [initialTodo, todoLoading, refetchTodo , successTodo] = useGetTasks("todo");
   const [initialOngoing, ongoingLoading,refetchOngoing , successOngoing] = useGetTasks("ongoing");
   const [initialCompleted, completedLoading, refetchCompleted , successCompleted] = useGetTasks("completed");
@@ -41,13 +44,28 @@ const ManageTasks = () => {
     );
 
   console.log(todoList);
-  const handleOnDragEnd = (result) => {
+  const handleOnDragEnd = async (result) => {
     console.log(result);
     if (!result.destination) return;
     const items = Array.from(todoList);
     const [reOrderItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reOrderItem);
     updateTodoList(items);
+
+    const modifiedStatus = result.destination.droppableId;
+    if(!modifiedStatus || result.source.droppableId ===  result.destination.droppableId) return;
+    const res = await axiosPublic.patch(`/updateList/${result.draggableId}`, {status: modifiedStatus})
+
+    console.log(res.data);
+    if(res.data.modifiedCount) {
+        toast.success('Task updated!')
+        refetchTodo();
+        refetchOngoing();
+        refetchCompleted();
+    }else {
+        toast.error("Something went wrong!")
+    }
+    
   };
 
   return (
@@ -68,7 +86,7 @@ const ManageTasks = () => {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {todoList?.map((data, idx) => (
+                  {initialTodo?.map((data, idx) => (
                     <Draggable
                       key={data._id}
                       draggableId={data._id}
@@ -178,7 +196,7 @@ const ManageTasks = () => {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {ongoingList?.map((data, idx) => (
+                  {initialOngoing?.map((data, idx) => (
                     <Draggable
                       key={data._id}
                       draggableId={data._id}
@@ -288,7 +306,7 @@ const ManageTasks = () => {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {completedList?.map((data, idx) => (
+                  {initialCompleted?.map((data, idx) => (
                     <Draggable
                       key={data._id}
                       draggableId={data._id}
