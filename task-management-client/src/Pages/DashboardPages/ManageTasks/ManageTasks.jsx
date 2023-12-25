@@ -12,7 +12,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { CiClock2 } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
 import { useState } from "react";
-import TodoList from "../TodoList/TodoList";
+
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import toast from 'react-hot-toast';
 
@@ -82,7 +82,7 @@ const ManageTasks = () => {
             <Droppable droppableId="todo">
               {(provided) => (
                 <div
-                  className="grid grid-cols-1 gap-4 mt-8"
+                  className="grid grid-cols-1 gap-4 mt-8 bg-gray-200 p-5 rounded-lg"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
@@ -192,7 +192,7 @@ const ManageTasks = () => {
             <Droppable droppableId="ongoing">
               {(provided) => (
                 <div
-                  className="grid grid-cols-1 gap-4 mt-8"
+                  className="grid grid-cols-1 gap-4 mt-8 bg-gray-200 p-5 rounded-lg"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
@@ -302,7 +302,7 @@ const ManageTasks = () => {
             <Droppable droppableId="completed">
               {(provided) => (
                 <div
-                  className="grid grid-cols-1 gap-4 mt-8"
+                  className="grid grid-cols-1 gap-4 mt-8 bg-gray-200 p-5 rounded-lg"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >

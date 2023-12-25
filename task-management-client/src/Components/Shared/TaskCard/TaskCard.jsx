@@ -11,8 +11,21 @@ import PropTypes from "prop-types";
 import { CiClock2, CiEdit } from "react-icons/ci";
 import { SlCalender } from "react-icons/sl";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import useTaskDelete from "../../../hooks/useTaskDelete";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
+import { useState } from "react";
 
 const TaskCard = ({ data }) => {
+  const handleDeleteTask = useTaskDelete();
+  const [open, setOpen] = useState(false);
+ 
+  const handleOpen = () => setOpen(!open);
   return (
     <Card className="">
       <CardHeader className="flex items-center justify-between p-1 -mb-2">
@@ -58,10 +71,26 @@ const TaskCard = ({ data }) => {
         <IconButton variant="text">
           <CiEdit className="text-xl" />
         </IconButton>
-        <IconButton variant="text" color="red">
+        <IconButton onClick={handleOpen} variant="text" color="red">
           <MdOutlineDeleteOutline className="text-xl" />
         </IconButton>
       </CardFooter>
+      <Dialog open={open} handler={handleOpen}>
+        <DialogHeader className="text-center mx-auto">Are you sure?</DialogHeader>
+        <DialogFooter>
+          <Button
+            variant="text"
+            color="red"
+            onClick={handleOpen}
+            className="mr-1"
+          >
+            <span>Cancel</span>
+          </Button>
+          <Button variant="gradient" color="green" onClick={() => {handleOpen(); handleDeleteTask(data._id);}}>
+            <span>Confirm</span>
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </Card>
   );
 };
